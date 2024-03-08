@@ -33,13 +33,13 @@ spec:
           envFrom:
             - configMapRef:
                 name: nginx-dev
-        - name: debian-container
-          image: debian
-          volumeMounts:
-            - name: shared-data
-              mountPath: /pod-data
-          command: ["/bin/sh"]
-          args: ["-c", "Debian says Hello! > /pod-data/index.html"]
+        #- name: debian-container
+        #  image: debian
+        #  volumeMounts:
+        #    - name: shared-data
+        #      mountPath: /pod-data
+        #  command: ["/bin/sh"]
+        #  args: ["-c", "Debian says Hello! > /pod-data/index.html"]
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -102,4 +102,3 @@ spec:
                 secretKeyRef:
                   name: nginx-conf-secret
                   key: password
-          command: ["/bin/echo", "From $(APP_OWNER), the $(APP_NAME) owner: $(APP_DESCRIPTION)! My username is $(USERNAME), my password is $(PASSWORD)"]
