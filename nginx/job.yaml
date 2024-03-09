@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: debian-job
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      nodeName: k8s-worker
+      volumes:
+        - name: shared-data
+          persistentVolumeClaim:
+            claimName: pvc10mi
+      containers:
+        - name: debian-cont
+          image: debian
+          volumeMounts:
+            - name: shared-data
+              mountPath: /mnt/data
+          command: ["/bin/sh"]
+          args: [
+            "-c",
+            "echo 'Debian says hello!' > /mnt/data/msg.txt"
+          ]

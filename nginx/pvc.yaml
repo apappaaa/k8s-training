@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nginx-pvc10mi
+  name: pvc10mi
 spec:
   storageClassName: manual
   accessModes:

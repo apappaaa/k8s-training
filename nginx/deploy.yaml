@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-dev
+  labels:
+    env: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-dev
+  template:
+    metadata:
+      labels:
+        app: nginx-dev
+    spec:
+      nodeName: k8s-worker
+      volumes:
+        - name: shared-data
+          persistentVolumeClaim:
+            claimName: pvc10mi
+        - name: configs
+          configMap:
+            name: nginx-global
+      containers:
+        - name: nginx-cont
+          image: nginx
+          volumeMounts:
+            - name: shared-data
+              mountPath: /mnt/data
+            - name: configs
+              mountPath: /etc/configs
+              readOnly: true
+          ports:
+            - name: http
+              containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: nginx-dev
+            - secretRef:
+                name: nginx-dev
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-prod
+  labels:
+    env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-prod
+  template:
+    metadata:
+      labels:
+        app: nginx-prod
+    spec:
+      nodeName: k8s-worker2
+      volumes:
+        - name: shared-data
+          persistentVolumeClaim:
+            claimName: pvc10mi
+      containers:
+        - name: nginx-cont
+          image: nginx
+          volumeMounts:
+            - name: shared-data
+              mountPath: /mnt/data
+          ports:
+            - name: http
+              containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: nginx-global
+            - configMapRef:
+                name: nginx-prod
+            - secretRef:
+                name: nginx-prod

@@ -6,9 +6,7 @@ metadata:
 data: # or binaryData
   APP_NAME: nginx
   APP_OWNER: Jr
-  APP_DESCRIPTION: DESCRIPTION
-  DESCRIPTION: |
-    This app is for training purpose
+  APP_DESCRIPTION: This app is for training purpose
 ---
 apiVersion: v1
 kind: ConfigMap

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nginx-pv10m
+  name: pv10m
   labels:
     type: local
 spec:
@@ -12,3 +12,4 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: /mnt/data
+    
